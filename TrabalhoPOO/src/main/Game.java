@@ -1,6 +1,5 @@
 package main;
 
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,31 +11,29 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import graphics.Spritesheet;
 
 public class Game extends Canvas implements Runnable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Thread thread;
-	public static JFrame frame;
+	private static JFrame frame;
 	public static final int WIDTH=240;
 	public static final int HEIGHT=180;
 	public static final int SCALE=3;
 	
 	private BufferedImage image;
+	private static Spritesheet spritesheet;
 	
 	public Game(){
 		this.setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
-		image=new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
-
+		this.image=new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+		spritesheet=new Spritesheet("/spritesheet.png");
 	}
 	
 	public void initFrame(){
 		frame=new JFrame();
 		frame.add(this);
-		//frame.setUndecorated(true);
 		frame.setResizable(false);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -69,8 +66,8 @@ public class Game extends Canvas implements Runnable{
 		g=bs.getDrawGraphics();
 		g.drawImage(image,0,0,WIDTH*SCALE,HEIGHT*SCALE,null);
 		bs.show();
-		
 	}
+	@Override
 	public void run() {
 		requestFocus();
 		long lastTime=System.nanoTime();
@@ -87,5 +84,11 @@ public class Game extends Canvas implements Runnable{
 				delta--;
 			}
 		}
+	}
+	public static Spritesheet getSpritesheet(){
+		return spritesheet;
+	}
+	public void setSpritesheet(Spritesheet spritesheet){
+		Game.spritesheet=spritesheet;
 	}
 }
