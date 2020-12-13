@@ -6,11 +6,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import entities.Enemy;
 import main.Game;
 
 public class World {
 	public static Tile[] tiles;
-	public static int width,height;
+	private static int width,height;
 	public static final int TILE_SIZE=16;
 	
 
@@ -32,23 +33,12 @@ public class World {
 						break;
 					case 0xFF0026FF:
 						//player
-
+						Game.getPlayer().setX(i*16);
+						Game.getPlayer().setY(j*16);
 						break;
 					case 0xFFFF0000:
-						//enemy
-
-						break;
-					case 0xFF4CFF00:
-						//weapon
-
-						break;
-					case 0xFF7F3300:
-						//chest
-
-						break;
-					case 0xFFFFD800:
-						//ammo
-
+						Enemy e=new Enemy(i*16,j*16,16,16);
+						Game.addEntity(e);
 						break;
 				}
 				
@@ -59,7 +49,7 @@ public class World {
 	}
 	}
 	
-	public static boolean isFree(int xNext,int yNext){
+	public boolean isFree(int xNext,int yNext){
 		int x1=xNext/TILE_SIZE;
 		int y1=yNext/TILE_SIZE;
 		
@@ -90,5 +80,11 @@ public class World {
 				tile.render(g);
 			}
 		}
+	}
+	public int getHeight(){
+		return height;
+	}
+	public int getWidth(){
+		return width;
 	}
 }
