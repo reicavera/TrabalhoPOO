@@ -20,9 +20,4 @@ public class WallTile extends Tile{
 	public void render(Graphics g) {
 		g.drawImage(sprite,x-Camera.getX(),y-Camera.getY(),null);
 	}
-	public boolean collision(){
-		if(this instanceof WallTile)
-			return true;
-		return false;
-	}
 }

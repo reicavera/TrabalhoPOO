@@ -1,7 +1,6 @@
 package world;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 public abstract class Tile {
 	
 	protected int x,y;
