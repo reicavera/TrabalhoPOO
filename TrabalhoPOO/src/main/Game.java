@@ -21,6 +21,10 @@ import graphics.Spritesheet;
 import world.World;
 
 public class Game extends Canvas implements Runnable,KeyListener{
+	/*
+	 * Classe principal do projeto,onde está o método main e os principais  dados do projeto(os atributos são estáticos
+	 * para evitar quaisquer diferenças entre informações entre as demais classes).
+	 */
 	private static final long serialVersionUID = 1L;
 	private Thread thread;
 	private static JFrame frame;
@@ -37,6 +41,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	private static int count;
 	
 	public Game(){
+		/*
+		 * Construtor de Game.Instancia os atributos da classe.
+		 */
 		this.setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
 		Sound.musicBackground.loop();
@@ -51,6 +58,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	
 	public void initFrame(){
+		/*
+		 * Configura a interface gráfica.
+		 */
 		frame=new JFrame();
 		frame.add(this);
 		frame.setResizable(false);
@@ -61,6 +71,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	
 	public synchronized void start(){
+		/*
+		 * Inicia as threads de Runnable.
+		 */
 		thread=new Thread(this);
 		thread.start();
 	}
@@ -71,22 +84,27 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	
 	public void tick(){
+		/*
+		 * Método que atualiza os estados dos objetos do jogo.
+		 */
 		if(count!=6){
-		if(player.getLife()<=0)
-			Game.restart();
-		if(count==4){
-			Enemy e=new Enemy(0,0,32,32,20,1,spritesheet.getSprite(0,16,32,32));
-			entities.add(e);
-			count++;
-		}
-		for(int i=0;i<entities.size();i++){
-			Entity e=entities.get(i);
-			e.tick(); 
-		}}
-		else{
+			if(player.getLife()<=0)
+				Game.restart();
+			if(count==4){
+				Enemy e=new Enemy(0,0,32,32,20,1,spritesheet.getSprite(0,16,32,32));
+				entities.add(e);
+				count++;
+			}
+			for(int i=0;i<entities.size();i++){
+				Entity e=entities.get(i);
+				e.tick(); 
+			}
 		}
 	}
 	public void render(){
+		/*
+		 * Método que renderiza na interface gráfica os objetos do jogo.
+		 */
 		BufferStrategy bs=this.getBufferStrategy();
 		if(bs==null){
 			this.createBufferStrategy(3);
@@ -112,6 +130,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	@Override
 	public void run() {
+		/*
+		 * Método a ser rodado nas threads.Note que foi feita uma otimização do programa para rodar sempre à 60FPS.
+		 */
 		requestFocus();
 		long lastTime=System.nanoTime();
 		double amountOfTicks=60.0;
@@ -129,6 +150,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		}
 	}
 	public static void restart(){
+		/*
+		 * Método que reinicializa os atributos de Game.Usado quando player recebe dano.
+		 */
 		entities=new ArrayList<Entity>();
 		player=new Player(0,0,16,16);
 		entities.add(player);
@@ -159,35 +183,41 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==e.VK_D){
+		/*
+		 * Método implementado de KeyListener.Altera os estados do player sempre que a tecla em específico é pressionada.
+		 */
+		if(e.getKeyCode()==KeyEvent.VK_D){
 			player.setRight(true);
 		}
-		else if(e.getKeyCode()==e.VK_A){
+		else if(e.getKeyCode()==KeyEvent.VK_A){
 			player.setLeft(true);
 		}
-		if(e.getKeyCode()==e.VK_W){
+		if(e.getKeyCode()==KeyEvent.VK_W){
 			player.setUp(true);
 		}
-		else if(e.getKeyCode()==e.VK_S){
+		else if(e.getKeyCode()==KeyEvent.VK_S){
 			player.setDown(true);
 		}
-		if(e.getKeyCode()==e.VK_SPACE){
+		if(e.getKeyCode()==KeyEvent.VK_SPACE){
 			player.setShoot(true);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode()==e.VK_D){
+		/*
+		 * Método implementado de KeyListener.Altera os estados do player sempre que a tecla em específico é solta.
+		 */
+		if(e.getKeyCode()==KeyEvent.VK_D){
 			player.setRight(false);
 		}
-		else if(e.getKeyCode()==e.VK_A){
+		else if(e.getKeyCode()==KeyEvent.VK_A){
 			player.setLeft(false);
 		}
-		if(e.getKeyCode()==e.VK_W){
+		if(e.getKeyCode()==KeyEvent.VK_W){
 			player.setUp(false);
 		}
-		else if(e.getKeyCode()==e.VK_S){
+		else if(e.getKeyCode()==KeyEvent.VK_S){
 			player.setDown(false);
 		}
 		

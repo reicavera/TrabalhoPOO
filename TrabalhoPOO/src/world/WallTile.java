@@ -7,6 +7,9 @@ import main.Game;
 import world.Camera;
 
 public class WallTile extends Tile{
+	/*
+	 * Tile que o jogador não pode atravessar.
+	 */
 	private static final BufferedImage WALL_TILE=Game.getSpritesheet().getSprite(16,0,16,16);
 	private BufferedImage sprite;
 	public WallTile(int x, int y) {

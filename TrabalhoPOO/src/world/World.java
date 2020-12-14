@@ -10,12 +10,17 @@ import entities.Enemy;
 import main.Game;
 
 public class World {
+	/*
+	 * Classe que agrupa os tiles para formar o mapa.Além disso define as posições iniciais das Entidades.
+	 */
 	public static Tile[] tiles;
 	private static int width,height;
 	public static final int TILE_SIZE=16;
 	
-
 	public World(String path){
+		/*
+		 * A partir de um arquivo de imagem,constrói o mapa de acordo com a cor de cada pixel. 
+		 */
 	try {
 		BufferedImage map=ImageIO.read(getClass().getResource(path));	
 		int[] pixels=new int[map.getWidth()*map.getHeight()];
@@ -25,18 +30,20 @@ public class World {
 		map.getRGB(0,0,map.getWidth(),map.getHeight(),pixels,0,map.getWidth());
 		for(int i=0;i<map.getWidth();i++){
 			for(int j=0;j<map.getHeight();j++){
+				//cobre o mapa com o chão
 				tiles[i+(j*height)]=new FloorTile(i*16,j*16);
 				switch(pixels[i+(j*map.getWidth())]){
 					case 0xFFFFFFFF:
-						//parede
+						//parede=pixel branco
 						tiles[i+(j*width)]=new WallTile(i*16,j*16);
 						break;
 					case 0xFF0026FF:
-						//player
+						//player=pixel azul
 						Game.getPlayer().setX(i*16);
 						Game.getPlayer().setY(j*16);
 						break;
 					case 0xFFFF0000:
+						//inimigo=pixel vermelho
 						Enemy e=new Enemy(i*16,j*16,16,16);
 						Game.addEntity(e);
 						break;
@@ -50,6 +57,9 @@ public class World {
 	}
 	
 	public boolean isFree(int xNext,int yNext){
+		/*
+		 * verifica se o próximo movimeto do jogador é valido,uma vez que o jogador não pode atravessar a parede.
+		 */
 		int x1=xNext/TILE_SIZE;
 		int y1=yNext/TILE_SIZE;
 		

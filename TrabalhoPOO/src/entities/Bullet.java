@@ -8,6 +8,9 @@ import main.Game;
 import world.Camera;
 
 public class Bullet extends Entity{
+	/*
+	 * se movimenta eu uma determinada direção até atingir um inimigo,causando 1 de dano.
+	 */
 	private BufferedImage sprite;
 	private double xSpeed,ySpeed;
 	public Bullet(double x, double y, int width, int height,double xSpeed,double ySpeed,BufferedImage sprite) {
@@ -24,7 +27,7 @@ public class Bullet extends Entity{
 	}
 
 	@Override
-	public void tick() {
+	public void tick(){
 		this.x+=xSpeed;
 		this.y+=ySpeed;
 		ArrayList<Entity> e=Game.getEntities();

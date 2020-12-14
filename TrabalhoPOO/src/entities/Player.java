@@ -5,9 +5,11 @@ import java.awt.image.BufferedImage;
 
 import main.Game;
 import world.Camera;
-import world.World;
 
 public class Player extends Entity implements Fighter{
+	/*
+	 * entidade controlada pelo jogador.
+	 */
 	private static final int LIFE_MAX=1;
 	private	int life;
 	private boolean up,down,left,right,shoot;
@@ -42,6 +44,9 @@ public class Player extends Entity implements Fighter{
 	}
 	@Override
 	public void move() {
+		/*
+		 * baseado nos inputs de KeyListener,o jogador se movimenta.
+		 */
 		if(right&&Game.getWorld().isFree((int)(x+speed),(int)(y))){
 			index=1;
 			x+=speed;
@@ -62,6 +67,9 @@ public class Player extends Entity implements Fighter{
 	}
 	@Override
 	public void attack() {
+		/*
+		 * ao apertar ESPAÇO,o jogador lança um Bullet na direção que estiver olhando.
+		 */
 		if(shoot){
 			shoot=false;
 			Bullet b;
